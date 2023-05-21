@@ -1,35 +1,26 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect } from "react";
+import getRacehorseDetails, { ResponseRacehorseDetails } from "./network/api/getRacehorseDetails";
 
 function App() {
-  const [count, setCount] = useState(0)
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const params = {
+          pageNo: 1,
+          // 다른 필요한 매개변수 추가
+        };
+        const response: ResponseRacehorseDetails = await getRacehorseDetails(params);
+        console.log(response.body.items.item);
+        // 데이터 처리 로직 추가
+      } catch (error) {
+        console.error(error);
+        // 에러 처리 로직 추가
+      }
+    };
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    fetchData();
+  }, []);
+  return <div></div>;
 }
 
-export default App
+export default App;
