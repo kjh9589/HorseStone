@@ -1,3 +1,4 @@
+import HSCard from "@components/card/HSCard";
 import getRacehorseDetails, { ResponseRacehorseDetails } from "./network/api/getRacehorseDetails";
 import { useQuery } from "react-query";
 
@@ -17,11 +18,7 @@ function App() {
   }
 
   return (
-    <div>
-      {data && data.body.items.item.map((racehorse) => (
-        <div key={racehorse.hrNo}>{racehorse.name}</div>
-      ))}
-    </div>
+    <HSCard/>
   );
 }
 
