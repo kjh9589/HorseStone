@@ -1,15 +1,20 @@
 const NUM_OF_ROWS = 10;
 const RESPONSE_TYPE = "json";
 
+const backgroundUrl = "/assets/background/"
 const backgroundImages = {
-  backgroundRating: "/assets/background/background_rating.svg",
-  backgroundLanding: "/assets/background/background_lading.jpeg",
-  backgroundNotFound: "/assets/background/background_not_found.jpeg",
+  backgroundRating: `${backgroundUrl}background_rating.svg`,
+  backgroundLanding: `${backgroundUrl}background_lading.jpeg`,
+  backgroundNotFound: `${backgroundUrl}background_not_found.jpeg`,
 };
 
+const decorationUrl = "/assets/decoration/"
 const decorationImages = {
-  decorationTitleBanner: "/assets/decoration/title_banner.jpeg",
-  decorationDescriptionBanner: "/assets/decoration/description_banner.jpeg",
+  decorationTitleBanner: `${decorationUrl}title_banner.jpeg`,
+  decorationDescriptionBanner: `${decorationUrl}description_banner.jpeg`,
+  decorationHorseBanner: `${decorationUrl}horse_banner.png`,
+  decorationHorseManBanner: `${decorationUrl}horseman_banner.png`,
+  decorationTrainerBanner: `${decorationUrl}trainer_banner.png`
 };
 
 const logoImage = "/assets/HorseStone.png";

@@ -13,7 +13,7 @@ const LadingWrapper = styled.div`
 const LadingBox = styled.div`
   position: absolute;
   width: 30vw;
-  height: 30vh;
+  height: 30vw;
   border-radius: 10px;
   background-color: ${colors.white};
   top: 50%;
@@ -31,7 +31,7 @@ const LandingScreen = () => {
         imageSize={["100%", "100%"]}
         imgaeFit="cover"
       />
-      <Link to="/horseScreen">
+      <Link to="/main">
         <LadingBox>
           <HSImage src={logoImage} imageSize={["100%", "100%"]} />
         </LadingBox>

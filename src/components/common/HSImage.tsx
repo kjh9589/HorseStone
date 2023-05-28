@@ -3,8 +3,10 @@ import { styled } from "styled-components";
 type HSImageSize =
   | ["24px", "24px"]
   | ["40px", "40px"]
+  | ["70px", "70px"]
   | ["90px", "50px"]
-  | ["100%", "100%"];
+  | ["100%", "100%"]
+  | ["10vw", "10vw"];
 
 type HSImageFit = "fill" | "contain" | "cover" | "none";
 
@@ -23,4 +25,5 @@ const HSImage = styled.img<HSImageProps>`
   opacity: ${(props) => (props.opacity ? props.opacity : "1.0")};
 `;
 
+export type { HSImageProps };
 export default HSImage;
