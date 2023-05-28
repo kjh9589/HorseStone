@@ -22,6 +22,11 @@ const HSCardWrapper = styled.div`
   position: relative;
   background-color: ${colors.white};
   display: inline-block;
+  transition: transform 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-10px);
+  }
 `;
 
 const HSCardRatingWrapper = styled.div`
