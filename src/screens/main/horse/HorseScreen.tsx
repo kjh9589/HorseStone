@@ -1,7 +1,7 @@
 import React from "react";
 
 const HorseScreen = () => {
-  return <></>
+  return <div>horse</div>
 };
 
 export default HorseScreen;

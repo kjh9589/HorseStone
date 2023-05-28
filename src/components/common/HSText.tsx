@@ -15,4 +15,6 @@ const HSText = styled.div<HSTextProps>`
   color: ${(props) => (props.textColor ? props.textColor : "#000000")};
   font-weight: ${(props) => (props.textWeight ? props.textWeight : "400")};
 `;
+
+export type { HSTextProps };
 export default HSText;
