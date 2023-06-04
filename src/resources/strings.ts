@@ -8,4 +8,10 @@ const sliceName = {
   screen: "screen"
 }
 
-export { mainFilterStrings, sliceName };
+const raceHorseDescription = {
+  country: "국적: ",
+  birth: "생년월일: ",
+  racePlace: "경주장: "
+}
+
+export { mainFilterStrings, sliceName, raceHorseDescription };

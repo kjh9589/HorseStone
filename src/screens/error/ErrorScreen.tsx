@@ -1,21 +1,22 @@
 import { backgroundImages } from "@/resources/constants";
 import HSImage from "@components/common/HSImage";
-import React from "react";
 import { styled } from "styled-components";
 
-const NotFoundWrapper = styled.div`
+const ErrorScreenWrapper = styled.div`
   width: 100vw;
   height: 100vh;
+  overflow: hidden;
 `;
-const NotFound = () => {
+
+const ErrorScreen = () => {
   return (
-    <NotFoundWrapper>
+    <ErrorScreenWrapper>
       <HSImage
-        src={backgroundImages.backgroundNotFound}
+        src={backgroundImages.backgroundError}
         imageSize={["100%", "100%"]}
       />
-    </NotFoundWrapper>
+    </ErrorScreenWrapper>
   );
 };
 
-export default NotFound;
+export default ErrorScreen;

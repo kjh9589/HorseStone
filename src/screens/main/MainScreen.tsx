@@ -16,12 +16,16 @@ const MainScreenWrapper = styled.div`
   width: 100vw;
   height: 100vh;
   position: relative;
-  overflow: hidden;
+  overflow-y: scroll;
+  overflow-x: hidden;
 `;
 
 const MainHeaderWrapper = styled.div`
-  position: absolute;
+  position: fixed;
   width: 100%;
+  z-index: 999;
+  overflow-x: hidden;
+  right: 9px;
 `;
 
 const MainTopWrapper = styled.div`
