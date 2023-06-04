@@ -14,16 +14,22 @@ interface HSCardProps {
   cardType: "DEFALT" | "LARGE";
   imageUri: string;
   title: string;
-  description: string;
+  description: Array<string>;
   rating: string;
+}
+
+interface HSCardDescriptionProps {
+  space: number;
 }
 
 const HSCardWrapper = styled.div`
   position: relative;
-  background-color: ${colors.white};
+  background-color: ${colors.subColor};
   display: inline-block;
   transition: transform 0.3s ease;
-  
+  border-radius: 10px;
+  cursor: pointer;
+
   &:hover {
     transform: translateY(-10px);
   }
@@ -43,7 +49,6 @@ const HSCardRating = styled.div`
 `;
 
 const HSCardBackground = styled.div<HSCardBackgroundProps>`
-  margin: 16px;
   width: ${(props) => props.cardSize[0]};
   height: ${(props) => props.cardSize[1]};
   display: flex;
@@ -67,7 +72,7 @@ const HSCardTitle = styled(HSText)`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-`
+`;
 
 const HSCardDescriptionWrapper = styled.div`
   height: 30%;
@@ -78,18 +83,33 @@ const HSCardDescriptionWrapper = styled.div`
   background-color: ${colors.black};
 `;
 
-const HSCardDescription = styled(HSText)`
+const HSCardDescriptionSection = styled.div`
   position: absolute;
   width: 85%;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  text-overflow: ellipsis;
-  display: inline-block;
   overflow: inherit;
-`
+  line-height: 20px;
+`;
 
 const HSCard = (props: HSCardProps) => {
+  const generateDescriptions = () => {
+    const descriptions: Array<React.ReactNode> = [];
+    props.description.forEach((value, index) => {
+      descriptions.push(
+        <HSText
+          key={index}
+          textColor={colors.white}
+          textWeight="500"
+          textSize="14px"
+        >
+          {value}
+        </HSText>
+      );
+    });
+    return descriptions;
+  };
   return (
     <HSCardWrapper>
       <HSCardBackground
@@ -98,19 +118,34 @@ const HSCard = (props: HSCardProps) => {
         }
       >
         <HSCardImage>
-          <HSImage src={props.imageUri} imageSize={["100%", "100%"]} imgaeFit="cover"/>
+          <HSImage
+            src={props.imageUri}
+            imageSize={["100%", "100%"]}
+            imgaeFit="cover"
+          />
         </HSCardImage>
         <HSCardTitleWrapper>
-          <HSImage src={decorationImages.decorationTitleBanner} imageSize={["100%", "100%"]} imgaeFit="cover" opacity={0.8}/>
+          <HSImage
+            src={decorationImages.decorationTitleBanner}
+            imageSize={["100%", "100%"]}
+            imgaeFit="cover"
+            opacity={0.8}
+          />
           <HSCardTitle textColor={colors.white} textWeight="700">
             {props.title}
           </HSCardTitle>
-          </HSCardTitleWrapper>
+        </HSCardTitleWrapper>
         <HSCardDescriptionWrapper>
-          <HSImage src={decorationImages.decorationDescriptionBanner} imageSize={["100%", "100%"]} imgaeFit="cover" isRound={true} opacity={0.8}/>
-          <HSCardDescription textColor={colors.white} textWeight="500">
-            {props.description}
-          </HSCardDescription>
+          <HSImage
+            src={decorationImages.decorationDescriptionBanner}
+            imageSize={["100%", "100%"]}
+            imgaeFit="cover"
+            isRound={true}
+            opacity={0.8}
+          />
+          <HSCardDescriptionSection>
+            {generateDescriptions()}
+          </HSCardDescriptionSection>
         </HSCardDescriptionWrapper>
       </HSCardBackground>
       <HSCardRatingWrapper>
