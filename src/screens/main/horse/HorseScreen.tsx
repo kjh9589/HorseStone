@@ -4,12 +4,15 @@ import getRacehorseDetails, {
 import { raceHorseDescription } from "@/resources/strings";
 import ErrorScreen from "@/screens/error/ErrorScreen";
 import LoadingScreen from "@/screens/loading/LoadingScreen";
-import { getRaceHorseDescription, getVisibleCardCount } from "@/utils/cardUtils";
+import {
+  getRaceHorseDescription,
+  getVisibleCardCount,
+} from "@/utils/cardUtils";
 import { getHorseImage } from "@/utils/horseUtils";
 import HSCard from "@components/card/HSCard";
 import { throttle } from "lodash";
 import React, { useEffect, useState } from "react";
-import { useQuery } from "react-query";
+import { useInfiniteQuery, useQuery } from "react-query";
 import { styled } from "styled-components";
 
 interface HorseScreenWrapperProps {
@@ -32,36 +35,30 @@ const HorseScreen = () => {
     getVisibleCardCount()
   );
   let pageNum = 1;
-  const { data, isLoading, isError } = useQuery<
-    ResponseRacehorseDetails,
-    Error
-  >("racehorseDetails", () => getRacehorseDetails({ pageNo: pageNum }), {
-    keepPreviousData: true,
-    refetchOnWindowFocus: false,
-  });
+  // const { data, isLoading, isError } = useQuery<
+  //   ResponseRacehorseDetails,
+  //   Error
+  // >("racehorseDetails", () => getRacehorseDetails({ pageNo: pageNum }), {
+  //   keepPreviousData: true,
+  //   refetchOnWindowFocus: false,
+  // });
+
+  const { data, isSuccess, isLoading, isError, fetchNextPage, hasNextPage } =
+    useInfiniteQuery<ResponseRacehorseDetails, Error>(
+      "racehorseDetails",
+      () => getRacehorseDetails({ pageNo: 1 }),
+      {
+        keepPreviousData: true,
+        refetchOnWindowFocus: false,
+        getNextPageParam: (lastPage, allPage) => {
+          return lastPage.body.pageNo + 1;
+        },
+      }
+    );
 
   const setOnResizeListener = throttle(() => {
     setVisibleCardCount(getVisibleCardCount());
   }, 300);
-
-  const generateHSCard = () => {
-    const cardList: Array<React.ReactNode> = [];
-    if (data) {
-      data.body.items.item.forEach((value, index) => {
-        cardList.push(
-          <HSCard
-            key={index}
-            cardType={"DEFALT"}
-            imageUri={getHorseImage()}
-            title={value.hrName}
-            description={[`${raceHorseDescription.country}${value.name}`, `${raceHorseDescription.birth}${value.birthday}`, `${raceHorseDescription.racePlace}${value.meet}`]}
-            rating={`${value.rating}`}
-          />
-        );
-      });
-      return cardList;
-    }
-  };
 
   useEffect(() => {
     window.addEventListener("resize", setOnResizeListener);
@@ -69,6 +66,25 @@ const HorseScreen = () => {
       window.removeEventListener("resize", setOnResizeListener);
     };
   }, []);
+
+  useEffect(() => {
+    let fetching = false;
+    const setOnScrollListener = throttle(async () => {
+      const scrollHeight = document.documentElement.scrollHeight;
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
+      const clientHeight = document.documentElement.clientHeight;
+
+      if (!fetching && scrollHeight - scrollTop <= clientHeight * 1.2) {
+        fetching = true;
+        if (hasNextPage) await fetchNextPage();
+        fetching = false;
+      }
+    }, 300);
+    window.addEventListener("scroll", setOnScrollListener);
+    return () => {
+      window.removeEventListener("scroll", setOnScrollListener);
+    };
+  }, [fetchNextPage, hasNextPage]);
 
   if (isLoading) {
     return <LoadingScreen />;
@@ -80,7 +96,23 @@ const HorseScreen = () => {
 
   return (
     <HorseScreenWrapper cardCount={visibleCardCount}>
-      {generateHSCard()}
+      {isSuccess &&
+        data.pages.map((page) =>
+          page.body.items.item.map((item) => (
+            <HSCard
+              key={item.hrNo}
+              cardType={"DEFALT"}
+              imageUri={getHorseImage()}
+              title={item.hrName}
+              description={[
+                `${raceHorseDescription.country}${item.name}`,
+                `${raceHorseDescription.birth}${item.birthday}`,
+                `${raceHorseDescription.racePlace}${item.meet}`,
+              ]}
+              rating={`${item.rating}`}
+            />
+          ))
+        )}
     </HorseScreenWrapper>
   );
 };
