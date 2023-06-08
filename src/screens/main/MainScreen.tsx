@@ -13,19 +13,15 @@ import store from "@/store/storeConfig";
 import { setCurrentScreen } from "@/store/ScreenSlice";
 
 const MainScreenWrapper = styled.div`
-  width: 100vw;
+  width: 100%;
   height: 100vh;
   position: relative;
-  overflow-y: scroll;
-  overflow-x: hidden;
 `;
 
 const MainHeaderWrapper = styled.div`
   position: fixed;
   width: 100%;
   z-index: 999;
-  overflow-x: hidden;
-  right: 9px;
 `;
 
 const MainTopWrapper = styled.div`
@@ -33,7 +29,6 @@ const MainTopWrapper = styled.div`
   display: flex;
   align-items: end;
   background-color: ${colors.subColor};
-  padding: 20px;
 `;
 
 const MainTop = styled.div`
