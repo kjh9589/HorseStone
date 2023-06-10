@@ -1,4 +1,4 @@
-const NUM_OF_ROWS = 10;
+const NUM_OF_ROWS = 21;
 const RESPONSE_TYPE = "json";
 
 const backgroundUrl = "/assets/background/";
@@ -23,9 +23,16 @@ const lottieFiles = {
   lottieLoading: `${lottieUrl}lottie_loading.json`,
 };
 
+const iconsUrl = "/assets/icons/";
+const iconFiles = {
+  arrowUp: `${iconsUrl}ic_arrow_up.png`,
+};
+
 const logoImage = "/assets/HorseStone.png";
 
 const horseImages = "/assets/horses/";
+
+const horsemanImages = "/assets/horsemans/";
 
 export {
   NUM_OF_ROWS,
@@ -33,6 +40,8 @@ export {
   backgroundImages,
   decorationImages,
   horseImages,
+  horsemanImages,
   logoImage,
   lottieFiles,
+  iconFiles,
 };

@@ -5,7 +5,6 @@ import { raceHorseDescription } from "@/resources/strings";
 import ErrorScreen from "@/screens/error/ErrorScreen";
 import LoadingScreen from "@/screens/loading/LoadingScreen";
 import {
-  getRaceHorseDescription,
   getVisibleCardCount,
 } from "@/utils/cardUtils";
 import { getHorseImage } from "@/utils/horseUtils";
@@ -25,7 +24,6 @@ const HorseScreenWrapper = styled.div<HorseScreenWrapperProps>`
   display: grid;
   grid-template-columns: repeat(${(props) => props.cardCount}, 240px);
   gap: 10px;
-  margin: 4px;
   align-items: start;
   justify-content: center;
 `;
@@ -34,27 +32,26 @@ const HorseScreen = () => {
   const [visibleCardCount, setVisibleCardCount] = useState(
     getVisibleCardCount()
   );
-  let pageNum = 1;
-  // const { data, isLoading, isError } = useQuery<
-  //   ResponseRacehorseDetails,
-  //   Error
-  // >("racehorseDetails", () => getRacehorseDetails({ pageNo: pageNum }), {
-  //   keepPreviousData: true,
-  //   refetchOnWindowFocus: false,
-  // });
 
-  const { data, isSuccess, isLoading, isError, fetchNextPage, hasNextPage } =
-    useInfiniteQuery<ResponseRacehorseDetails, Error>(
-      "racehorseDetails",
-      () => getRacehorseDetails({ pageNo: 1 }),
-      {
-        keepPreviousData: true,
-        refetchOnWindowFocus: false,
-        getNextPageParam: (lastPage, allPage) => {
-          return lastPage.body.pageNo + 1;
-        },
-      }
-    );
+  const {
+    data,
+    isSuccess,
+    isLoading,
+    isFetching,
+    isError,
+    fetchNextPage,
+    hasNextPage,
+  } = useInfiniteQuery<ResponseRacehorseDetails, Error>(
+    "racehorseDetails",
+    ({ pageParam = 1 }) => getRacehorseDetails({ pageNo: pageParam }),
+    {
+      keepPreviousData: true,
+      refetchOnWindowFocus: false,
+      getNextPageParam: (lastPage, allPage) => {
+        return lastPage.body.pageNo + 1;
+      },
+    }
+  );
 
   const setOnResizeListener = throttle(() => {
     setVisibleCardCount(getVisibleCardCount());
@@ -67,24 +64,22 @@ const HorseScreen = () => {
     };
   }, []);
 
-  useEffect(() => {
-    let fetching = false;
-    const setOnScrollListener = throttle(async () => {
-      const scrollHeight = document.documentElement.scrollHeight;
-      const scrollTop = window.scrollY || document.documentElement.scrollTop;
-      const clientHeight = document.documentElement.clientHeight;
+  const setOnScrollListener = throttle(async () => {
+    const scrollHeight = document.documentElement.scrollHeight;
+    const scrollY = window.scrollY;
+    const innerHeight = window.innerHeight;
 
-      if (!fetching && scrollHeight - scrollTop <= clientHeight * 1.2) {
-        fetching = true;
-        if (hasNextPage) await fetchNextPage();
-        fetching = false;
-      }
-    }, 300);
+    if (!isFetching && (scrollY + innerHeight) * 1.3 >= scrollHeight) {
+      if (hasNextPage) await fetchNextPage();
+    }
+  }, 300);
+
+  useEffect(() => {
     window.addEventListener("scroll", setOnScrollListener);
     return () => {
       window.removeEventListener("scroll", setOnScrollListener);
     };
-  }, [fetchNextPage, hasNextPage]);
+  }, [isFetching]);
 
   if (isLoading) {
     return <LoadingScreen />;
@@ -102,7 +97,7 @@ const HorseScreen = () => {
             <HSCard
               key={item.hrNo}
               cardType={"DEFALT"}
-              imageUri={getHorseImage()}
+              imageUri={getHorseImage(item.hrNo)}
               title={item.hrName}
               description={[
                 `${raceHorseDescription.country}${item.name}`,

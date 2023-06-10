@@ -5,13 +5,25 @@ const mainFilterStrings = {
 };
 
 const sliceName = {
-  screen: "screen"
-}
+  screen: "screen",
+  modal: "modal"
+};
 
 const raceHorseDescription = {
   country: "국적: ",
   birth: "생년월일: ",
-  racePlace: "경주장: "
-}
+  racePlace: "경주장: ",
+};
 
-export { mainFilterStrings, sliceName, raceHorseDescription };
+const horseManDescription = {
+  age: "나이: ",
+  debut: "데뷔: ",
+  racePlace: "경주장: ",
+};
+
+export {
+  mainFilterStrings,
+  sliceName,
+  raceHorseDescription,
+  horseManDescription,
+};
