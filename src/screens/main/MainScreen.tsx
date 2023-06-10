@@ -1,6 +1,6 @@
 import { useAppSelector } from "@/hooks/storeHooks";
 import colors from "@/resources/colors";
-import { decorationImages } from "@/resources/constants";
+import { decorationImages, iconFiles } from "@/resources/constants";
 import { mainFilterStrings } from "@/resources/strings";
 import HSHeader from "@components/header/HSHeader";
 import VerticalImageText from "@components/vertical/VerticalImageText";
@@ -10,18 +10,20 @@ import HorseScreen from "./horse/HorseScreen";
 import HorseManScreen from "./horseman/HorseManScreen";
 import TrainerScreen from "./trainer/TraninerScreen";
 import store from "@/store/storeConfig";
-import { setCurrentScreen } from "@/store/ScreenSlice";
+import HSImage from "@components/common/HSImage";
+import { setCurrentScreen } from "@/store/screenSlice";
+import HSModal from "@components/common/HSModal";
 
 const MainScreenWrapper = styled.div`
   width: 100%;
-  height: 100vh;
+  height: 100%;
   position: relative;
 `;
 
 const MainHeaderWrapper = styled.div`
   position: fixed;
   width: 100%;
-  z-index: 999;
+  z-index: 1;
 `;
 
 const MainTopWrapper = styled.div`
@@ -29,6 +31,8 @@ const MainTopWrapper = styled.div`
   display: flex;
   align-items: end;
   background-color: ${colors.subColor};
+  padding: 8px;
+  margin-bottom: 8px;
 `;
 
 const MainTop = styled.div`
@@ -38,8 +42,17 @@ const MainTop = styled.div`
   justify-content: space-evenly;
 `;
 
+const FloatingButton = styled(HSImage)`
+  position: fixed;
+  bottom: 8px;
+  right: 8px;
+  z-index: 1;
+  cursor: pointer;
+`;
+
 const MainScreen = () => {
   const currentScreen = useAppSelector((state) => state.screen.currentScreen);
+  const isModalOpened = useAppSelector((state) => state.modal.isOpened);
 
   const setOnHorseClickListener = () => {
     store.dispatch(setCurrentScreen("horse"));
@@ -47,6 +60,13 @@ const MainScreen = () => {
 
   const setOnHorseManClickListener = () => {
     store.dispatch(setCurrentScreen("horseman"));
+  };
+
+  const setOnFloatingButtonClickListener = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
   };
 
   const setOnCurrentScreen = () => {
@@ -64,6 +84,7 @@ const MainScreen = () => {
 
   return (
     <MainScreenWrapper>
+      {isModalOpened && <HSModal></HSModal>}
       <MainHeaderWrapper>
         <HSHeader />
       </MainHeaderWrapper>
@@ -89,6 +110,13 @@ const MainScreen = () => {
         </MainTop>
       </MainTopWrapper>
       {setOnCurrentScreen()}
+
+      <FloatingButton
+        src={iconFiles.arrowUp}
+        imageSize={["40px", "40px"]}
+        isRound={true}
+        onClick={setOnFloatingButtonClickListener}
+      />
     </MainScreenWrapper>
   );
 };
