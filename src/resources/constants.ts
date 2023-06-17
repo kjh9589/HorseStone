@@ -26,6 +26,8 @@ const lottieFiles = {
 const iconsUrl = "/assets/icons/";
 const iconFiles = {
   arrowUp: `${iconsUrl}ic_arrow_up.png`,
+  arrowRight: `${iconsUrl}ic_arrow_forward.png`,
+  arrowLeft: `${iconsUrl}ic_arrow_back.png`,
 };
 
 const logoImage = "/assets/HorseStone.png";

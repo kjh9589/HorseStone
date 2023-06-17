@@ -13,6 +13,8 @@ import store from "@/store/storeConfig";
 import HSImage from "@components/common/HSImage";
 import { setCurrentScreen } from "@/store/screenSlice";
 import HSModal from "@components/common/HSModal";
+import HorseDetail from "./detail/HorseDetail";
+import HorseManDetail from "./detail/HorseManDetail";
 
 const MainScreenWrapper = styled.div`
   width: 100%;
@@ -53,6 +55,7 @@ const FloatingButton = styled(HSImage)`
 const MainScreen = () => {
   const currentScreen = useAppSelector((state) => state.screen.currentScreen);
   const isModalOpened = useAppSelector((state) => state.modal.isOpened);
+  const modalType = useAppSelector((state) => state.modalDetail.type);
 
   const setOnHorseClickListener = () => {
     store.dispatch(setCurrentScreen("horse"));
@@ -67,6 +70,15 @@ const MainScreen = () => {
       top: 0,
       behavior: "smooth",
     });
+  };
+
+  const renderModal = () => {
+    switch (modalType) {
+      case "horse":
+        return <HorseDetail />;
+      case "horseman":
+        return <HorseManDetail />;
+    }
   };
 
   const setOnCurrentScreen = () => {
@@ -84,7 +96,7 @@ const MainScreen = () => {
 
   return (
     <MainScreenWrapper>
-      {isModalOpened && <HSModal></HSModal>}
+      {isModalOpened && <HSModal>{renderModal()}</HSModal>}
       <MainHeaderWrapper>
         <HSHeader />
       </MainHeaderWrapper>
