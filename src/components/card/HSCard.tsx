@@ -3,8 +3,6 @@ import HSImage from "@components/common/HSImage";
 import { styled } from "styled-components";
 import colors from "@/resources/colors";
 import HSText from "@components/common/HSText";
-import store from "@/store/storeConfig";
-import { setIsOpened } from "@/store/modalSlice";
 
 type HSCardSize = ["240px", "388px"] | ["355px", "574px"];
 
@@ -18,6 +16,7 @@ interface HSCardProps {
   title: string;
   description: Array<string>;
   rating: string;
+  onClickListener?: () => void
 }
 
 interface HSCardDescriptionProps {
@@ -113,12 +112,8 @@ const HSCard = (props: HSCardProps) => {
     return descriptions;
   };
 
-  const setOnClickListener = () => {
-    store.dispatch(setIsOpened(true));
-  };
-
   return (
-    <HSCardWrapper onClick={setOnClickListener}>
+    <HSCardWrapper onClick={props.onClickListener}>
       <HSCardBackground
         cardSize={
           props.cardType === "DEFALT" ? ["240px", "388px"] : ["355px", "574px"]

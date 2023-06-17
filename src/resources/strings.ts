@@ -6,7 +6,8 @@ const mainFilterStrings = {
 
 const sliceName = {
   screen: "screen",
-  modal: "modal"
+  modal: "modal",
+  modalDetail: "modalDetail",
 };
 
 const raceHorseDescription = {

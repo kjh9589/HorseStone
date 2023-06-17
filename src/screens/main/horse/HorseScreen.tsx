@@ -4,14 +4,15 @@ import getRacehorseDetails, {
 import { raceHorseDescription } from "@/resources/strings";
 import ErrorScreen from "@/screens/error/ErrorScreen";
 import LoadingScreen from "@/screens/loading/LoadingScreen";
-import {
-  getVisibleCardCount,
-} from "@/utils/cardUtils";
+import { setDetailInfo } from "@/store/cardDetailSlice";
+import { setIsOpened } from "@/store/modalSlice";
+import store from "@/store/storeConfig";
+import { getVisibleCardCount } from "@/utils/cardUtils";
 import { getHorseImage } from "@/utils/horseUtils";
 import HSCard from "@components/card/HSCard";
 import { throttle } from "lodash";
-import React, { useEffect, useState } from "react";
-import { useInfiniteQuery, useQuery } from "react-query";
+import { useEffect, useState } from "react";
+import { useInfiniteQuery } from "react-query";
 import { styled } from "styled-components";
 
 interface HorseScreenWrapperProps {
@@ -93,7 +94,7 @@ const HorseScreen = () => {
     <HorseScreenWrapper cardCount={visibleCardCount}>
       {isSuccess &&
         data.pages.map((page) =>
-          page.body.items.item.map((item) => (
+          page.body.items.item.map((item, index) => (
             <HSCard
               key={item.hrNo}
               cardType={"DEFALT"}
@@ -105,6 +106,17 @@ const HorseScreen = () => {
                 `${raceHorseDescription.racePlace}${item.meet}`,
               ]}
               rating={`${item.rating}`}
+              onClickListener={() => {
+                store.dispatch(
+                  setDetailInfo({
+                    no: item.hrNo,
+                    type: "horse",
+                    page: page.body.pageNo,
+                  })
+                );
+              
+                store.dispatch(setIsOpened(true));
+              }}
             />
           ))
         )}
