@@ -64,7 +64,7 @@ const DetailInfoDiv = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-evenly;
-`
+`;
 
 const PrevButton = styled(HSImage)`
   position: absolute;
@@ -124,7 +124,6 @@ const HosreDetail = () => {
 
   const setOnPrevClickListener = () => {
     if (currentIdx === 0) {
-      console.log("sss");
       store.dispatch(
         setDetailInfo({
           no: Number.MIN_SAFE_INTEGER,
@@ -165,11 +164,15 @@ const HosreDetail = () => {
 
   return (
     <HosreDetailWrapper>
-      <PrevButton
-        imageSize={["40px", "40px"]}
-        src={iconFiles.arrowLeft}
-        onClick={setOnPrevClickListener}
-      />
+      {raceHorseDetailInfo.page === 1 && currentIdx === 0 ? (
+        ""
+      ) : (
+        <PrevButton
+          imageSize={["40px", "40px"]}
+          src={iconFiles.arrowLeft}
+          onClick={setOnPrevClickListener}
+        />
+      )}
       <NextButton
         imageSize={["40px", "40px"]}
         src={iconFiles.arrowRight}
@@ -191,10 +194,18 @@ const HosreDetail = () => {
             rating={`${currentHSCard?.rating}`}
           />
           <DetailInfoDiv>
-            <HSText textSize="18px">부 : {currentHSCard.faHrName} ({currentHSCard.faHrNo})</HSText>
-            <HSText textSize="18px">모 : {currentHSCard.moHrName} ({currentHSCard.moHrNo})</HSText>
-            <HSText textSize="18px">오너 : {currentHSCard.owName} ({currentHSCard.owNo})</HSText>
-            <HSText textSize="18px">트레이너 : {currentHSCard.trName} ({currentHSCard.trNo})</HSText>
+            <HSText textSize="18px">
+              부 : {currentHSCard.faHrName} ({currentHSCard.faHrNo})
+            </HSText>
+            <HSText textSize="18px">
+              모 : {currentHSCard.moHrName} ({currentHSCard.moHrNo})
+            </HSText>
+            <HSText textSize="18px">
+              오너 : {currentHSCard.owName} ({currentHSCard.owNo})
+            </HSText>
+            <HSText textSize="18px">
+              트레이너 : {currentHSCard.trName} ({currentHSCard.trNo})
+            </HSText>
             <HSText textSize="18px">성별: {currentHSCard.sex}</HSText>
           </DetailInfoDiv>
         </ContentDiv>
