@@ -1,7 +1,12 @@
-import getHorsemanDetails, { ResponseHorseManDetails } from "@/network/api/getHorsemanDetails";
+import getHorsemanDetails, {
+  ResponseHorseManDetails,
+} from "@/network/api/getHorsemanDetails";
 import { horseManDescription } from "@/resources/strings";
 import ErrorScreen from "@/screens/error/ErrorScreen";
 import LoadingScreen from "@/screens/loading/LoadingScreen";
+import { setDetailInfo } from "@/store/cardDetailSlice";
+import { setIsOpened } from "@/store/modalSlice";
+import store from "@/store/storeConfig";
 import { getVisibleCardCount } from "@/utils/cardUtils";
 import { getHorseManImage } from "@/utils/horseManUtils";
 import HSCard from "@components/card/HSCard";
@@ -101,6 +106,17 @@ const HorseManScreen = () => {
                 `${horseManDescription.racePlace}${item.meet}`,
               ]}
               rating={``}
+              onClickListener={() => {
+                store.dispatch(
+                  setDetailInfo({
+                    no: Number(item.jkNo),
+                    type: "horseman",
+                    page: page.body.pageNo,
+                  })
+                );
+
+                store.dispatch(setIsOpened(true));
+              }}
             />
           ))
         )}
