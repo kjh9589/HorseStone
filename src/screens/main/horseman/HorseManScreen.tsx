@@ -48,7 +48,7 @@ const HorseManScreen = () => {
     {
       keepPreviousData: true,
       refetchOnWindowFocus: false,
-      getNextPageParam: (lastPage, allPage) => {
+      getNextPageParam: (lastPage, _) => {
         return lastPage.body.pageNo + 1;
       },
     }

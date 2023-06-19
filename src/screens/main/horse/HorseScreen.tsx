@@ -48,7 +48,7 @@ const HorseScreen = () => {
     {
       keepPreviousData: true,
       refetchOnWindowFocus: false,
-      getNextPageParam: (lastPage, allPage) => {
+      getNextPageParam: (lastPage) => {
         return lastPage.body.pageNo + 1;
       },
     }
@@ -94,7 +94,7 @@ const HorseScreen = () => {
     <HorseScreenWrapper cardCount={visibleCardCount}>
       {isSuccess &&
         data.pages.map((page) =>
-          page.body.items.item.map((item, index) => (
+          page.body.items.item.map((item) => (
             <HSCard
               key={item.hrNo}
               cardType={"DEFALT"}
