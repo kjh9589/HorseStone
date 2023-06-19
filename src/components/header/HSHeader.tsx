@@ -3,7 +3,6 @@ import { logoImage } from "@/resources/constants";
 import HSImage from "@components/common/HSImage";
 import HSSpaceBox from "@components/common/HSSpaceBox";
 import HSText from "@components/common/HSText";
-import React from "react";
 import { Link } from "react-router-dom";
 import { styled } from "styled-components";
 

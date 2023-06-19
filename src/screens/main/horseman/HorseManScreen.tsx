@@ -11,7 +11,7 @@ import { getVisibleCardCount } from "@/utils/cardUtils";
 import { getHorseManImage } from "@/utils/horseManUtils";
 import HSCard from "@components/card/HSCard";
 import { throttle } from "lodash";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useInfiniteQuery } from "react-query";
 import { styled } from "styled-components";
 

@@ -4,7 +4,6 @@ import { decorationImages, iconFiles } from "@/resources/constants";
 import { mainFilterStrings } from "@/resources/strings";
 import HSHeader from "@components/header/HSHeader";
 import VerticalImageText from "@components/vertical/VerticalImageText";
-import React from "react";
 import { styled } from "styled-components";
 import HorseScreen from "./horse/HorseScreen";
 import HorseManScreen from "./horseman/HorseManScreen";

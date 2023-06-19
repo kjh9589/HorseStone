@@ -19,10 +19,6 @@ interface HSCardProps {
   onClickListener?: () => void
 }
 
-interface HSCardDescriptionProps {
-  space: number;
-}
-
 const HSCardWrapper = styled.div`
   position: relative;
   background-color: ${colors.subColor};

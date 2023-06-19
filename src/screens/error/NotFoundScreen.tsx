@@ -1,6 +1,5 @@
 import { backgroundImages } from "@/resources/constants";
 import HSImage from "@components/common/HSImage";
-import React from "react";
 import { styled } from "styled-components";
 
 const NotFoundWrapper = styled.div`
