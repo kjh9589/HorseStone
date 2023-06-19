@@ -1,7 +1,6 @@
 import colors from "@/resources/colors";
 import { backgroundImages, logoImage } from "@/resources/constants";
 import HSImage from "@components/common/HSImage";
-import React from "react";
 import { Link } from "react-router-dom";
 import { styled } from "styled-components";
 
