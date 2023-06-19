@@ -17,7 +17,7 @@ export const cardDetailModalSlice = createSlice({
   name: sliceName.modalDetail,
   initialState: initDetailState,
   reducers: {
-    setDetailInfo: (state, action: PayloadAction<DetailInfoState>) => {
+    setDetailInfo: (_, action: PayloadAction<DetailInfoState>) => {
       /*
       따라서 Redux Toolkit의 createSlice에서 생성한 리듀서에서는 상태 객체의 개별 속성을 수정하는 것이 가장 적합한 방법입니다.
       이렇게 하면 Redux Toolkit이 변경 사항을 적절하게 처리하고 새로운 상태를 생성합니다.
